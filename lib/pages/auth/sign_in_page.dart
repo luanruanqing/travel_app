@@ -13,36 +13,40 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var phoneController = TextEditingController();
-    // var passwordController = TextEditingController();
+    var phoneController = TextEditingController();
+    var passwordController = TextEditingController();
 
-    // void _login(AuthController authController) {
-    //   String phone = phoneController.text.trim();
-    //   String password = passwordController.text.trim();
-    //
-    //   if (phone.isEmpty) {
-    //     ShowCustomSnackBar("Type in your phone number",
-    //         title: "Phone number");
-    //   } else if (password.isEmpty) {
-    //     ShowCustomSnackBar("Type in your password", title: "Password");
-    //   } else if (password.length < 6) {
-    //     ShowCustomSnackBar("Password can not be less than 6 characters",
-    //         title: "Password");
-    //   } else {
-    //     authController.login(phone, password).then((status){
-    //       if(status.isSuccess){
-    //         Get.toNamed(RouteHelper.getInitial());
-    //       }else{
-    //         ShowCustomSnackBar(status.message);
-    //       }
-    //     });
-    //   }
-    // }
+    void _login(AuthController authController) {
+      try{
+        String phone = phoneController.text.trim();
+        String password = passwordController.text.trim();
+
+        if (phone.isEmpty) {
+          ShowCustomSnackBar("Type in your phone number",
+              title: "Phone number");
+        } else if (password.isEmpty) {
+          ShowCustomSnackBar("Type in your password", title: "Password");
+        } else if (password.length < 6) {
+          ShowCustomSnackBar("Password can not be less than 6 characters",
+              title: "Password");
+        } else {
+          authController.login(phone, password).then((status){
+            if(status.isSuccess){
+              Get.toNamed(RouteHelper.getInitial());
+            }else{
+              ShowCustomSnackBar(status.message);
+            }
+          });
+        }
+      }catch(e){
+        print(e.toString());
+      }
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: GetBuilder<AuthController>(builder: (authController) {
-        return !authController.isLoading?SingleChildScrollView(
+        return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Positioned(
             top: Dimensions.height60,
@@ -75,7 +79,7 @@ class SignInPage extends StatelessWidget {
               ],
             ),
           ),
-        ):const CustomLoader();
+        );
       }),
     );
   }

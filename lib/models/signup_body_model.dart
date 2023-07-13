@@ -1,21 +1,21 @@
 class SignUpBody {
-  String email;
-  String password;
-  String name;
+  String firstname;
+  String lastname;
   String phone;
+  String password;
 
   SignUpBody({
-    required this.email,
-    required this.password,
-    required this.name,
+    required this.firstname,
+    required this.lastname,
     required this.phone,
+    required this.password,
   });
 
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data["f_name"] = this.name;
+    data["first_name"] = this.firstname;
+    data["last_name"] = this.lastname;
     data["phone"] = this.phone;
-    data["email"] = this.email;
     data["password"] = this.password;
 
     return data;

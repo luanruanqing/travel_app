@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_app/utils/AppColors.dart';
+import 'package:travel_app/utils/appColors.dart';
 import 'package:travel_app/utils/dimensions.dart';
 
 class AppTextField extends StatelessWidget {
@@ -26,6 +26,9 @@ class AppTextField extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2)
           ),
         ],
+        border: Border.all(
+          color: Color(0xff72635d),
+        ),
       ),
       child: TextField(
         obscureText: isObscure?true:false,
@@ -34,7 +37,7 @@ class AppTextField extends StatelessWidget {
           hintText: hintText,
           prefixIcon: Icon(
             icon,
-            color: AppColors.mainColor,
+            color: AppColors.textColor2,
           ),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radius30),

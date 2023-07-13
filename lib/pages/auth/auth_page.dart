@@ -95,7 +95,9 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: Dimensions.height10,),
+                  SizedBox(
+                    height: Dimensions.height10,
+                  ),
                   RichText(
                     text: TextSpan(
                       recognizer: TapGestureRecognizer()
@@ -145,6 +147,17 @@ class AuthScreen extends StatelessWidget {
             ),
             SizedBox(
               height: Dimensions.height30,
+            ),
+            Text(
+              "Sign up with",
+              style: TextStyle(
+                fontSize: Dimensions.font20,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textColor2,
+              ),
+            ),
+            SizedBox(
+              height: Dimensions.height20,
             ),
             Container(
               child: Row(
