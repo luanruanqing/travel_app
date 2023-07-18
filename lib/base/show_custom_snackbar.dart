@@ -13,6 +13,6 @@ void ShowCustomSnackBar(String message, {bool isError = true, String title = "Er
     ),
     colorText: Colors.white,
     snackPosition: SnackPosition.TOP,
-    backgroundColor: Colors.redAccent,
+    backgroundColor: Color(0xFF5c525f),
   );
 }

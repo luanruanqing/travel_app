@@ -1,7 +1,9 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_app/data/repository/auth_repo.dart';
 import 'package:travel_app/models/response_model.dart';
 import 'package:travel_app/models/signup_body_model.dart';
 import 'package:get/get.dart';
+import 'package:travel_app/utils/app_constants.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
@@ -16,6 +18,7 @@ class AuthController extends GetxController implements GetxService {
   Future<ResponseModel> registration(SignUpBody signUpBody) async {
     _isLoading = true;
     update();
+    authRepo.saveUserPhoneAndPassword(signUpBody.phone, signUpBody.password);
     Response response = await authRepo.registration(signUpBody);
     late ResponseModel responseModel;
 
@@ -41,14 +44,33 @@ class AuthController extends GetxController implements GetxService {
       authRepo.saveUserToken(response.body["token"]);
       responseModel = ResponseModel(true, response.body["token"]);
     } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      responseModel = ResponseModel(false, response.body["message"]);
     }
     _isLoading = false;
     update();
     return responseModel;
   }
 
-  void saveUserEmailAndPassword(String phone, String password) {
+  Future<ResponseModel> otp(String phone, String otp) async {
+    authRepo.getUserToken();
+    _isLoading = true;
+    update();
+    Response response = await authRepo.otp(phone, otp);
+    late ResponseModel responseModel;
+    print("sdt: "+phone);
+    print("otp: "+otp);
+    if (response.statusCode == 200) {
+      authRepo.saveUserToken(response.body["token"]);
+      responseModel = ResponseModel(true, response.body["token"]);
+    } else {
+      responseModel = ResponseModel(false, response.body["message"]);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  void saveUserPhoneAndPassword(String phone, String password) {
     authRepo.saveUserPhoneAndPassword(phone, password);
   }
 

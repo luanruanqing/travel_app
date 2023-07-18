@@ -10,6 +10,8 @@ class AppColors{
   static final Color buttonbackgroundColor = const Color(0xFFf7f6f4);
   static final Color signColor = const Color(0xFFa9a29f);
   static final Color titleColor = const Color(0xFF5c525f);
+  static final Color whiteColor = const Color(0xFFFFFFFF);
   static final Color yellowColor = const Color(0xFFffd379);
   static final Color mainBlackColor = const Color(0xff000000);
+  // static final Color mainBlackColor2 = const Color(0xff3014ba);
 }

@@ -152,7 +152,7 @@ class AuthScreen extends StatelessWidget {
               "Sign up with",
               style: TextStyle(
                 fontSize: Dimensions.font20,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w700,
                 color: AppColors.textColor2,
               ),
             ),
@@ -170,7 +170,7 @@ class AuthScreen extends StatelessWidget {
                     width: Dimensions.width30,
                   ),
                   Container(
-                    child: Image.asset("assets/images/facebook.png"),
+                    child: Image.asset("assets/images/facebook.png",color: AppColors.textColor2,),
                   ),
                 ],
               ),

@@ -19,6 +19,7 @@ dependencies:
   shared_preferences: ^2.1.1
   intl: ^0.18.1
   url_strategy: ^0.2.0
+  google_fonts: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +33,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
   fonts:
     - family: Roboto
       fonts:

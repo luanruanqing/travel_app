@@ -20,8 +20,7 @@ class SignUpPage extends StatelessWidget {
     var lastnameController = TextEditingController();
     var phoneController = TextEditingController();
 
-    void _registration(
-        AuthController authController) {
+    void _register(AuthController authController) {
       String firstname = firstnameController.text.trim();
       String lastname = lastnameController.text.trim();
       String phone = phoneController.text.trim();
@@ -47,8 +46,7 @@ class SignUpPage extends StatelessWidget {
         );
         authController.registration(signUpBody).then((status) {
           if (status.isSuccess) {
-            print("Success registration");
-            Get.toNamed(RouteHelper.getInitial());
+            Get.toNamed(RouteHelper.getOtpPage());
           } else {
             ShowCustomSnackBar(status.message);
           }
@@ -57,14 +55,15 @@ class SignUpPage extends StatelessWidget {
     }
 
     return Scaffold(
-      body: GetBuilder<AuthController>(builder: (authController){
-          return Stack(
-            children: [
-              Positioned(
-                top: Dimensions.height60,
-                left: Dimensions.width20,
-                right: Dimensions.width20,
-                child: Row(
+      body: GetBuilder<AuthController>(builder: (authController) {
+        return SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Dimensions.screenHeight * 0.05,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
@@ -74,134 +73,221 @@ class SignUpPage extends StatelessWidget {
                       child: AppIcon(
                         icon: Icons.arrow_back_ios,
                         iconColor: AppColors.textColor2,
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppColors.whiteColor,
                         iconSize: Dimensions.iconSize32,
                       ),
                     ),
                     SizedBox(
                       width: Dimensions.screenWidth / 4,
                     ),
-                    Container(
-                      child: Text(
-                        "Sign up",
-                        style: TextStyle(
-                            fontFamily: "Roboto",
-                            fontSize: Dimensions.font26,
-                            fontWeight: FontWeight.w900),
-                      ),
-                    )
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontFamily: "Roboto",
+                          fontSize: Dimensions.font26,
+                          fontWeight: FontWeight.w900),
+                    ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: Dimensions.height60,
-              ),
-              Positioned(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: Dimensions.screenHeight * 0.15,
+                SizedBox(
+                  height: Dimensions.height30,
+                ),
+                AppTextField(
+                  textController: firstnameController,
+                  hintText: "First name",
+                  icon: Icons.person,
+                ),
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
+                AppTextField(
+                  textController: lastnameController,
+                  hintText: "Last name",
+                  icon: Icons.person,
+                ),
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
+                AppTextField(
+                  textController: phoneController,
+                  hintText: "Phone number",
+                  icon: Icons.phone_outlined,
+                ),
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
+                AppTextField(
+                  isObscure:true,
+                  textController: passwordController,
+                  hintText: "Password",
+                  icon: Icons.lock_open_outlined,
+                ),
+                SizedBox(
+                  height: Dimensions.height20,
+                ),
+                Text(
+                  "By tapping sign up you agree to the Terms and",
+                  style: TextStyle(
+                    fontSize: Dimensions.font16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textColor2,
+                  ),
+                ),
+                SizedBox(
+                  height: Dimensions.height10,
+                ),
+                Text(
+                  "Condition and Privacy Policy of this app",
+                  style: TextStyle(
+                    fontSize: Dimensions.font16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textColor2,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _register(authController);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        top: Dimensions.height30,
+                        left: Dimensions.width30,
+                        right: Dimensions.width30),
+                    width: Dimensions.screenWidth,
+                    height: Dimensions.screenHeight / 13,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(Dimensions.radius20 / 2),
+                      border: Border.all(
+                        color: Color(0xff72635d),
+                      ),
+                      color: Color(0xffffffff),
                     ),
-                    AppTextField(
-                      textController: firstnameController,
-                      hintText: "First name",
-                      icon: Icons.person,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height30,
-                    ),
-                    AppTextField(
-                      textController: lastnameController,
-                      hintText: "Last name",
-                      icon: Icons.person,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height30,
-                    ),
-                    AppTextField(
-                      textController: phoneController,
-                      hintText: "Phone number",
-                      icon: Icons.phone_outlined,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height30,
-                    ),
-                    AppTextField(
-                      textController: passwordController,
-                      hintText: "Password",
-                      icon: Icons.lock_open_outlined,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _registration(
-                          authController
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: Dimensions.height60,
-                            left: Dimensions.width30,
-                            right: Dimensions.width30),
-                        width: Dimensions.screenWidth,
-                        height: Dimensions.screenHeight / 13,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radius20 / 2),
-                          border: Border.all(
-                            color: Color(0xff72635d),
-                          ),
-                          color: Color(0xffffffff),
+                    child: Center(
+                      child: Text(
+                        'Sign up',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: Dimensions.font20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff72635d),
                         ),
-                        child: Center(
-                          child: Text(
-                            'Sign up',
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: Dimensions.height30,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: Dimensions.width30),
+                      child: Image.asset(
+                        "assets/icons/line.png",
+                        width: Dimensions.screenWidth * 0.2,
+                      ),
+                    ),
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    Text(
+                      "or sign up with",
+                      style: TextStyle(
+                          fontSize: Dimensions.font20,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      width: Dimensions.width20,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: Dimensions.width30),
+                      child: Image.asset(
+                        "assets/icons/line.png",
+                        width: Dimensions.screenWidth * 0.2,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Dimensions.height30,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: Dimensions.width30),
+                      width: Dimensions.screenWidth / 2.5,
+                      height: Dimensions.screenHeight / 13,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        border: Border.all(
+                          color: AppColors.buttonbackgroundColor,
+                        ),
+                        color: AppColors.buttonbackgroundColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/images/google.png"),
+                          SizedBox(
+                            width: Dimensions.width10,
+                          ),
+                          Text(
+                            'Google',
                             style: TextStyle(
                               fontFamily: 'Roboto',
                               fontSize: Dimensions.font20,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff72635d),
+                              color: Color(0xff000000),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                     SizedBox(
-                      height: Dimensions.height30,
-                    ),
-                    Text(
-                      "Sign up with",
-                      style: TextStyle(
-                        fontSize: Dimensions.font20,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.textColor2,
-                      ),
-                    ),
-                    SizedBox(
-                      height: Dimensions.height20,
+                      width: Dimensions.width20,
                     ),
                     Container(
+                      margin: EdgeInsets.only(right: Dimensions.width30),
+                      width: Dimensions.screenWidth / 2.5,
+                      height: Dimensions.screenHeight / 13,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        border: Border.all(
+                          color: Color(0xff3014ba),
+                        ),
+                        color: Color(0xff3014ba),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Image.asset("assets/images/google.png"),
+                          Image.asset(
+                            "assets/images/facebook.png",
+                            color: AppColors.whiteColor,
                           ),
                           SizedBox(
-                            width: Dimensions.width30,
+                            width: Dimensions.width10,
                           ),
-                          Container(
-                            child: Image.asset("assets/images/facebook.png"),
+                          Text(
+                            'Facebook',
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontSize: Dimensions.font20,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xffffffff),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          );
-        }
-      ),
+              ],
+            ));
+      }),
     );
   }
 }

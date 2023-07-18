@@ -5,11 +5,10 @@ class AppConstants {
 
   static const String UPLOADS_URL = "/uploads/";
 
-  static const String SIGN_IN_URI = "/api/user/signin";
-  static const String SIGN_UP_URI = "/api/user/signup";
-  static const String USER_INFO_URI = "/api/users/info";
+  static const String SIGN_IN_URI = "/api/user/login";
+  static const String SIGN_UP_URI = "/api/user/register";
+  static const String OTP_URI = "/api/user/verify-otp";
 
-  static const String USER_ADDRESS = "user_address";
   static const String TOKEN = "";
   static const String PHONE = "";
   static const String PASSWORD = "";
