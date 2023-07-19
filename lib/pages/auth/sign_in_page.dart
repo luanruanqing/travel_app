@@ -37,7 +37,7 @@ class SignInPage extends StatelessWidget {
             if (status.isSuccess) {
               Get.toNamed(RouteHelper.getInitial());
             } else {
-              ShowCustomSnackBar(title: "Verity phone number" ,status.message);
+              ShowCustomSnackBar(title: "Error user" ,status.message);
             }
           });
         }
@@ -49,7 +49,7 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GetBuilder<AuthController>(builder: (authController) {
-        return SingleChildScrollView(
+        return !authController.isLoading?SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -313,7 +313,7 @@ class SignInPage extends StatelessWidget {
               )
             ],
           ),
-        );
+        ):CustomLoader();
       }),
     );
   }

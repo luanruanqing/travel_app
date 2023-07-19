@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:travel_app/base/custom_loader.dart';
 import 'package:travel_app/base/show_custom_snackbar.dart';
 import 'package:travel_app/controller/auth_controller.dart';
 import 'package:travel_app/models/signup_body_model.dart';
@@ -56,7 +57,7 @@ class SignUpPage extends StatelessWidget {
 
     return Scaffold(
       body: GetBuilder<AuthController>(builder: (authController) {
-        return SingleChildScrollView(
+        return !authController.isLoading?SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
@@ -286,7 +287,8 @@ class SignUpPage extends StatelessWidget {
                   ],
                 ),
               ],
-            ));
+            ),
+        ):CustomLoader();
       }),
     );
   }

@@ -26,8 +26,14 @@ class AuthRepo {
     return await sharedPreferences.getString(AppConstants.TOKEN) ?? "NONE";
   }
 
-  Future<String> getPhone() async {
-    return sharedPreferences.getString(AppConstants.PHONE) ?? "NONE";
+  Future<void> savePhoneNumber(String phoneNumber) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('phone', phoneNumber);
+  }
+
+  Future<String?> getPhoneNumber() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('phone');
   }
 
   Future<Response> login(String phone, String password) async {

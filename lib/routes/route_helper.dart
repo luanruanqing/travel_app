@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:travel_app/base/custom_loader.dart';
 import 'package:travel_app/pages/auth/auth_page.dart';
 import 'package:travel_app/pages/auth/otp_page.dart';
 import 'package:travel_app/pages/auth/sign_in_page.dart';
 import 'package:travel_app/pages/auth/sign_up_page.dart';
+import 'package:travel_app/pages/home/home_page.dart';
 import 'package:travel_app/pages/splash/splash_page.dart';
 
 class RouteHelper {
@@ -25,7 +27,7 @@ class RouteHelper {
     GetPage(
       name: initial,
       page: () {
-        return const AuthScreen();
+        return const HomePage();
       },
       transition: Transition.fade,
     ),

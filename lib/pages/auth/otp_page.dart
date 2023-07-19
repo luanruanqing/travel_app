@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travel_app/base/custom_loader.dart';
 import 'package:travel_app/base/show_custom_snackbar.dart';
 import 'package:travel_app/controller/auth_controller.dart';
 import 'package:travel_app/routes/route_helper.dart';
@@ -46,10 +47,9 @@ class OtpPage extends StatelessWidget {
           ShowCustomSnackBar("Type in field six", title: "Field six");
         } else {
           String otp = fieldOne+fieldTwo+fieldThree+fieldFour+fieldFive+fieldSix;
-          authController.otp(authController.authRepo.getPhone() as String, otp).then((status) {
+          authController.otp(otp).then((status) {
             if (status.isSuccess) {
-              ShowCustomSnackBar(title: "okei", status.message);
-              // Get.toNamed(RouteHelper.getInitial());
+              Get.toNamed(RouteHelper.getSignIn());
             } else {
               ShowCustomSnackBar(title: "Confirm verity", status.message);
             }
@@ -61,7 +61,7 @@ class OtpPage extends StatelessWidget {
     }
 
     return Scaffold(body: GetBuilder<AuthController>(builder: (authController) {
-      return SingleChildScrollView(
+      return !authController.isLoading?SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +113,7 @@ class OtpPage extends StatelessWidget {
                     height: Dimensions.height30 / 2,
                   ),
                   Text(
-                    "Enter code sent yo your number",
+                    "Enter code sent to your number",
                     style: TextStyle(
                         color: AppColors.textColor2,
                         fontSize: Dimensions.font20,
@@ -199,7 +199,7 @@ class OtpPage extends StatelessWidget {
             ),
           ],
         ),
-      );
+      ):CustomLoader();
     }));
   }
 }
