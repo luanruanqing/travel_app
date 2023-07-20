@@ -5,21 +5,26 @@ import 'package:travel_app/models/travel_model.dart';
 class TravelController extends GetxController implements GetxService {
   final TravelRepo travelRepo;
   TravelController({required this.travelRepo});
-  List<TravelModel> _nearestTravelList = [];
-  List<TravelModel> get nearestTravelList => _nearestTravelList;
+  List<TravelModel> _popularTravelList = [];
+  List<TravelModel> get popularTravelList => _popularTravelList;
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
-  Future<void> getNearestTravelList() async {
-    Response response = await travelRepo.getNearestTravelList();
-    if (response.statusCode == 200) {
-      _nearestTravelList = [];
-      _nearestTravelList.addAll(Travel.fromJson(response.body).travels);
-      _isLoaded = true;
-      print(_isLoaded);
-      update();
-    }else{}
+  Future<void> getPopularTravelList() async {
+    try {
+      Response response = await travelRepo.getPopularTravelList();
+      if (response.statusCode == 200) {
+        _popularTravelList = [];
+        _popularTravelList.addAll(Travel
+            .fromJson(response.body)
+            .travels);
+        _isLoaded = true;
+        update();
+      } else {}
+    }catch (e){
+      print(e);
+    }
   }
 
 }

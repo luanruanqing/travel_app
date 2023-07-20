@@ -8,7 +8,9 @@ class AppConstants {
   static const String SIGN_UP_URI = "/api/user/register";
   static const String OTP_URI = "/api/user/verify-otp";
   static const String TRAVEL_ALL_URI = "/api/travel/all";
-  static const String TRAVEL_NEAREST_URI = "/api/travel/get-nearest";
+  static const String TRAVEL_POPULAR_URI = "/api/travel/get-popular";
+  static const String LOCATION_POPULAR_URI = "/api/location/get-all";
+  static const String HOTEL_BEST_DEAL_URI = "/api/hotel/get-all";
 
   static const String TOKEN = "";
   static const String PHONE = "";

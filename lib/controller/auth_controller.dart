@@ -62,9 +62,7 @@ class AuthController extends GetxController implements GetxService {
       authRepo.saveUserToken(response.body["token"]);
       responseModel = ResponseModel(true, response.body["token"]);
     } else {
-      print("sdt: "+phone);
-      print("otp: "+otp);
-      // responseModel = ResponseModel(false, response.body["message"]);
+      responseModel = ResponseModel(false, response.body["message"]);
     }
     _isLoading = false;
     update();
