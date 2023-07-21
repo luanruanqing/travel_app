@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:travel_app/controller/hotel_controller.dart';
 import 'package:travel_app/controller/location_controller.dart';
 import 'package:travel_app/controller/travel_controller.dart';
+import 'package:travel_app/routes/route_helper.dart';
 import 'package:travel_app/utils/appColors.dart';
 import 'package:travel_app/utils/app_constants.dart';
 import 'package:travel_app/utils/dimensions.dart';
+import 'package:travel_app/widgets/star_rating.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -261,8 +263,9 @@ class _HomePageState extends State<HomePage> {
                                 padding:
                                     EdgeInsets.only(right: Dimensions.width15),
                                 child: GestureDetector(
-                                  onTap: () => print(popularTravel
-                                      .popularTravelList[index].id),
+                                  onTap: () {
+                                    Get.toNamed(RouteHelper.getHotelDetail(index, "home"));
+                                  },
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -339,6 +342,7 @@ class _HomePageState extends State<HomePage> {
                       ? Container(
                           margin: EdgeInsets.only(top: Dimensions.height15),
                           child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: hotelBestDeal.bestDealHotelList.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -346,16 +350,19 @@ class _HomePageState extends State<HomePage> {
                                   padding: EdgeInsets.only(
                                       bottom: Dimensions.height15),
                                   child: GestureDetector(
-                                    onTap: () => print(hotelBestDeal
-                                        .bestDealHotelList[index].id),
+                                    onTap: () {
+                                      Get.toNamed(RouteHelper.getHotelDetail(index, "home"));
+                                    },
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         ClipRRect(
                                           borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(Dimensions.radius20 / 2),
-                                            bottomLeft: Radius.circular(Dimensions.radius20 / 2),
+                                            topLeft: Radius.circular(
+                                                Dimensions.radius20 / 2),
+                                            bottomLeft: Radius.circular(
+                                                Dimensions.radius20 / 2),
                                           ),
                                           child: Image.network(
                                             AppConstants.BASE_URL +
@@ -371,9 +378,9 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         Expanded(
-                                          child: Container(
-                                            padding:EdgeInsets.only(left: Dimensions.width10),
-                                            color: AppColors.mainColor,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: Dimensions.width20),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -383,29 +390,37 @@ class _HomePageState extends State<HomePage> {
                                                       .bestDealHotelList[index]
                                                       .name!,
                                                   style: TextStyle(
-                                                      fontSize: Dimensions.font20,
+                                                      color: AppColors.mainColor,
+                                                      fontSize:
+                                                          Dimensions.font20,
                                                       fontWeight:
-                                                      FontWeight.w600),
+                                                          FontWeight.w600),
                                                 ),
-                                                Text(
-                                                  '\$ ' +
-                                                      hotelBestDeal
-                                                          .bestDealHotelList[
-                                                      index]
-                                                          .price!,
-                                                  style: TextStyle(
-                                                      fontSize: Dimensions.font20,
-                                                      fontWeight:
-                                                      FontWeight.w400),
-                                                ),
-                                                Text(
-                                                  hotelBestDeal
+                                                StarRating(
+                                                  rating: hotelBestDeal
                                                       .bestDealHotelList[index]
-                                                      .address!,
-                                                  style: TextStyle(
-                                                      fontSize: Dimensions.font16,
-                                                      fontWeight:
-                                                      FontWeight.w300),
+                                                      .rating!,
+                                                  color: AppColors.yellowColor,
+                                                ),
+                                                RichText(
+                                                  text: TextSpan(children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: '\$ ${hotelBestDeal.bestDealHotelList[index].price!}',
+                                                      style: TextStyle(
+                                                        color: AppColors.mainColor,
+                                                        fontSize: Dimensions.font20,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    TextSpan(
+                                                      text: ' / per night',
+                                                      style: TextStyle(
+                                                        color: AppColors.mainBlackColor,
+                                                        fontSize: Dimensions.font16,
+                                                        fontStyle: FontStyle.italic,
+                                                      ),
+                                                    ),
+                                                  ]),
                                                 ),
                                               ],
                                             ),

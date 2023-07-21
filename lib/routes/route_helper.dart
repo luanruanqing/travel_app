@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
-import 'package:travel_app/base/custom_loader.dart';
 import 'package:travel_app/pages/auth/auth_page.dart';
 import 'package:travel_app/pages/auth/otp_page.dart';
 import 'package:travel_app/pages/auth/sign_in_page.dart';
 import 'package:travel_app/pages/auth/sign_up_page.dart';
 import 'package:travel_app/pages/home/home_page.dart';
+import 'package:travel_app/pages/hotel/hotel_detail_page.dart';
 import 'package:travel_app/pages/splash/splash_page.dart';
+import 'package:travel_app/pages/travel/travel_detail_page.dart';
 
 class RouteHelper {
   static const String splashPage = "/splash-page";
@@ -14,6 +15,8 @@ class RouteHelper {
   static const String signUp = "/sign-up";
   static const String signIn = "/sign-in";
   static const String otpPage = "/otp-page";
+  static const String hotelDetail = "/hotel-detail";
+  static const String travelDetail = "/travel-detail";
 
   static String getSplashPage() => '$splashPage';
   static String getInitial() => '$initial';
@@ -21,6 +24,8 @@ class RouteHelper {
   static String getSignIn() => '$signIn';
   static String getSignUp() => '$signUp';
   static String getOtpPage() => '$otpPage';
+  static String getHotelDetail(int pageId, String page) => '$hotelDetail?pageId=$pageId&page=$page';
+  static String getTravelDetail(int pageId, String page) => '$travelDetail?pageId=$pageId&page=$page';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => const SplashScreen()),
@@ -59,5 +64,15 @@ class RouteHelper {
       },
       transition: Transition.fade,
     ),
+    GetPage(name: hotelDetail, page: (){
+      var pageId = Get.parameters['pageId'];
+      var page = Get.parameters['page'];
+      return HotelDetail(pageId: int.parse(pageId!), page: page!);
+    }),
+    GetPage(name: travelDetail, page: (){
+      var pageId = Get.parameters['pageId'];
+      var page = Get.parameters['page'];
+      return TravelDetail(pageId: int.parse(pageId!), page: page!);
+    })
   ];
 }

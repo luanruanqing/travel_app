@@ -17,23 +17,24 @@ class FadeAnimation extends StatelessWidget {
         AnimationType.opacity,
         Tween(begin: 0.0, end: 1.0),
         duration: const Duration(milliseconds: 500),
-      )..tween(
+      )
+      ..tween(
         AnimationType.translateX,
-        Tween(begin: -30.0, end: 1.0),
-        duration: const Duration(milliseconds: 500),
+        Tween(begin: -30.0, end: -20.0),
+        duration: const Duration(milliseconds: 2),
       );
 
     return PlayAnimationBuilder(
       tween: tween,
       duration: Duration(milliseconds: (500 * delay).round()),
       child: child,
-      builder: (context, value, child) =>
-          Opacity(
-            opacity: value.get(AnimationType.opacity),
-            child: Transform.translate(
-              offset: Offset(0, value.get(AnimationType.translateX)),
-              child: child,),
-          ),
+      builder: (context, value, child) => Opacity(
+        opacity: value.get(AnimationType.opacity),
+        child: Transform.translate(
+          offset: Offset(0, value.get(AnimationType.translateX)),
+          child: child,
+        ),
+      ),
     );
   }
 }
