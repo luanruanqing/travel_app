@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:travel_app/pages/auth/auth_page.dart';
 import 'package:travel_app/pages/auth/otp_page.dart';
+import 'package:travel_app/pages/auth/profile_page.dart';
 import 'package:travel_app/pages/auth/sign_in_page.dart';
 import 'package:travel_app/pages/auth/sign_up_page.dart';
 import 'package:travel_app/pages/home/home_page.dart';
@@ -15,6 +16,7 @@ class RouteHelper {
   static const String signUp = "/sign-up";
   static const String signIn = "/sign-in";
   static const String otpPage = "/otp-page";
+  static const String profilePage = "/profile-page";
   static const String hotelDetail = "/hotel-detail";
   static const String travelDetail = "/travel-detail";
 
@@ -24,6 +26,7 @@ class RouteHelper {
   static String getSignIn() => '$signIn';
   static String getSignUp() => '$signUp';
   static String getOtpPage() => '$otpPage';
+  static String getProfilePage() => '$profilePage';
   static String getHotelDetail(int pageId, String page) => '$hotelDetail?pageId=$pageId&page=$page';
   static String getTravelDetail(int pageId, String page) => '$travelDetail?pageId=$pageId&page=$page';
 
@@ -61,6 +64,13 @@ class RouteHelper {
       name: signUp,
       page: () {
         return const SignUpPage();
+      },
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: profilePage,
+      page: () {
+        return const ProfilePage();
       },
       transition: Transition.fade,
     ),

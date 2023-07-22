@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:travel_app/base/custom_loader.dart';
+import 'package:travel_app/controller/auth_controller.dart';
 import 'package:travel_app/controller/hotel_controller.dart';
 import 'package:travel_app/controller/location_controller.dart';
 import 'package:travel_app/controller/travel_controller.dart';
+import 'package:travel_app/controller/user_controller.dart';
 import 'package:travel_app/routes/route_helper.dart';
 import 'package:travel_app/utils/appColors.dart';
 import 'package:travel_app/utils/app_constants.dart';
 import 'package:travel_app/utils/dimensions.dart';
+import 'package:travel_app/widgets/bottom_menu_bar.dart';
+import 'package:travel_app/widgets/navbar_menu.dart';
 import 'package:travel_app/widgets/star_rating.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,18 +37,30 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    bool userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if (userLoggedIn) {
+      Get.find<UserController>().getUserInfo();
+    }
 
     return Scaffold(
+      key: scaffoldKey,
+      drawer: const Navbarmenu(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/icons/menu.png",
-              width: Dimensions.width30,
-              color: AppColors.mainColor,
+            GestureDetector(
+              onTap: () {
+                scaffoldKey.currentState?.openDrawer();
+              },
+              child: Image.asset(
+                "assets/icons/menu.png",
+                width: Dimensions.width30,
+                color: AppColors.mainColor,
+              ),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,14 +86,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.radius20 / 2),
-              ),
-              child: Image.asset(
-                "assets/icons/profile.png",
-                width: Dimensions.width20 * 2,
-              ),
+            GetBuilder<UserController>(
+              builder: (userController) {
+                return userLoggedIn
+                    ? (userController.isLoading
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.offNamed(RouteHelper.getProfilePage());
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(Dimensions.radius20 / 2),
+                              ),
+                              child: Image.network(
+                                AppConstants.BASE_URL +
+                                    AppConstants.UPLOADS_URL +
+                                    userController.userModel.avatar!,
+                                width: Dimensions.listViewImgSize * .4,
+                              ),
+                            ))
+                        : const CustomLoader())
+                    : const CustomLoader();
+              },
             ),
           ],
         ),
@@ -264,7 +295,8 @@ class _HomePageState extends State<HomePage> {
                                     EdgeInsets.only(right: Dimensions.width15),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.toNamed(RouteHelper.getHotelDetail(index, "home"));
+                                    Get.toNamed(RouteHelper.getHotelDetail(
+                                        index, "home"));
                                   },
                                   child: Column(
                                     crossAxisAlignment:
@@ -342,7 +374,7 @@ class _HomePageState extends State<HomePage> {
                       ? Container(
                           margin: EdgeInsets.only(top: Dimensions.height15),
                           child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: hotelBestDeal.bestDealHotelList.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -351,7 +383,8 @@ class _HomePageState extends State<HomePage> {
                                       bottom: Dimensions.height15),
                                   child: GestureDetector(
                                     onTap: () {
-                                      Get.toNamed(RouteHelper.getHotelDetail(index, "home"));
+                                      Get.toNamed(RouteHelper.getHotelDetail(
+                                          index, "home"));
                                     },
                                     child: Row(
                                       crossAxisAlignment:
@@ -390,7 +423,8 @@ class _HomePageState extends State<HomePage> {
                                                       .bestDealHotelList[index]
                                                       .name!,
                                                   style: TextStyle(
-                                                      color: AppColors.mainColor,
+                                                      color:
+                                                          AppColors.mainColor,
                                                       fontSize:
                                                           Dimensions.font20,
                                                       fontWeight:
@@ -403,24 +437,32 @@ class _HomePageState extends State<HomePage> {
                                                   color: AppColors.yellowColor,
                                                 ),
                                                 RichText(
-                                                  text: TextSpan(children: <TextSpan>[
-                                                    TextSpan(
-                                                      text: '\$ ${hotelBestDeal.bestDealHotelList[index].price!}',
-                                                      style: TextStyle(
-                                                        color: AppColors.mainColor,
-                                                        fontSize: Dimensions.font20,
-                                                        fontWeight: FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    TextSpan(
-                                                      text: ' / per night',
-                                                      style: TextStyle(
-                                                        color: AppColors.mainBlackColor,
-                                                        fontSize: Dimensions.font16,
-                                                        fontStyle: FontStyle.italic,
-                                                      ),
-                                                    ),
-                                                  ]),
+                                                  text: TextSpan(
+                                                      children: <TextSpan>[
+                                                        TextSpan(
+                                                          text:
+                                                              '\$ ${hotelBestDeal.bestDealHotelList[index].price!}',
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .mainColor,
+                                                            fontSize: Dimensions
+                                                                .font20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        TextSpan(
+                                                          text: ' / per night',
+                                                          style: TextStyle(
+                                                            color: AppColors
+                                                                .mainBlackColor,
+                                                            fontSize: Dimensions
+                                                                .font16,
+                                                            fontStyle: FontStyle
+                                                                .italic,
+                                                          ),
+                                                        ),
+                                                      ]),
                                                 ),
                                               ],
                                             ),
@@ -441,6 +483,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      bottomNavigationBar: const BottomMenuBar(),
     );
   }
 }

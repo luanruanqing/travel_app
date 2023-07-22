@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter App Travel Simple',
-      initialRoute: RouteHelper.getInitial(),
+      initialRoute: RouteHelper.getSplashPage(),
       getPages: RouteHelper.routes,
       theme: ThemeData(
         primaryColor: AppColors.mainColor,
